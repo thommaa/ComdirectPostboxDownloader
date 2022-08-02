@@ -1,12 +1,16 @@
 [DEFAULT]
-
+# NOTE: You may NOT use inline comments! Inline comments will be recognized as part of the value!
 #comdirect login data
+# PLEASE NOTE:
+# The values for user, pw, clientID and clientSecret are PRIVATE and SENSITIVE. NEVER share them with ANYONE!
+# Die Werte für user, pw, clientID und clientSecret sind GEHEIM und SCHÜTZENSWERT. Teile sie NIEMALS mit irgendjemanden!
 user=Zugangsnummer
 pwd=PIN/Passwort
 
 #comdirect API access data (https://kunde.comdirect.de/itx/oauth/privatkunden)
-clientId=ClientID, die via API Access erhaltbar ist (https://kunde.comdirect.de/itx/oauth/privatkunden)
-clientSecret=ClientSecret, welches ebenfalls in vorigem Link verfügbar ist
+#ClientID+Secret, die via API Access abrufbar ist (https://kunde.comdirect.de/itx/oauth/privatkunden)
+clientId=**** 
+clientSecret=****
 
 #output directory
 outputDir=Dokumente
@@ -22,8 +26,8 @@ downloadOnlyFilenames=True
 # gehört zu downloadOnlyFilenames: hier werden die Dateinamen angegeben, welche heruntergeladen werden sollen als Dictionary: 
 downloadOnlyFilenamesArray={"Finanzreport", "Jahressteuerbescheinigung", "Wertpapierabrechnung", "Steuermitteilung", "Gutschrift", "Dividendengutschrift", "Ertragsgutschrift"}
 
-#[True/False], if True, only documents in archive will be downloaded
-downloadOnlyFromOnlineArchive=True
+#[archivedOnly/notArchivedOnly/all] selection for document source
+downloadSource=archivedOnly
 
 #not yet used WIP
 range=

@@ -70,9 +70,18 @@ class Connection:
         )
 
         try:
-            rjson = r.json()
-            self.access_token = rjson["access_token"]
-            self.refresh_token = rjson["refresh_token"]
+            if r.status_code == 200:
+                rjson = r.json()
+                self.access_token = rjson["access_token"]
+                self.refresh_token = rjson["refresh_token"]
+            else:
+                status = r.status_code
+                reason = ""
+                if status == 401:
+                    reason = "This usually means wrong clientID/clientSecret"
+                elif status == 400:
+                    reason = "This usually means wrong username/pwd"
+                print(f"HTTP Status: {r.status_code} | {r.json()['error_description']} | {reason}")
         except Exception as err:
             raise err
 
@@ -90,8 +99,7 @@ class Connection:
             except Exception as err:
                 raise err
         else:
-            print(r.status_code)
-            print(r.json())
+            print(f"HTTP Status: {r.status_code} | {r.json()}")
 
     def __getTANChallenge(self):
         """
@@ -114,8 +122,7 @@ class Connection:
         if r.status_code == 201:
             self.__getSessionTAN(r.headers)
         else:
-            print(r.status_code)
-            print(r.json)
+            print(f"HTTP Status: {r.status_code} | {r.json()}")
 
     def __getSessionTAN(self, validationHeaders):
         """
@@ -142,6 +149,10 @@ class Connection:
             # If photoTAN, user needs to solve the challenge and provide the tan manually.
             tan = self.__challenge_ptan(xauthinfoheaders["challenge"])
             headers["x-once-authentication"] = tan
+        elif xauthinfoheaders["typ"] == "M_TAN":
+            # If mobile TAN, user gets TAN via mobile.
+            tan = self.__challenge_mtan(xauthinfoheaders["challenge"])
+            headers["x-once-authentication"] = tan
         else:
             print(
                 "Sorry, the TAN type "
@@ -160,8 +171,7 @@ class Connection:
             headers=headers,
         )
         if r.status_code != 200:
-            print(r.status_code)
-            print(r.json())
+            print(f"HTTP Status: {r.status_code} | {r.json()}")
 
     def __challenge_ptan(self, challenge):
         """
@@ -174,6 +184,15 @@ class Connection:
 
         Image.open(io.BytesIO(base64.b64decode(challenge))).show()
         print(" Please follow the usual photo TAN challenge process.")
+        tan = input("Enter the TAN code: ")
+        return tan
+
+    def __challenge_mtan(self, challenge):
+        """
+        Challenge to get the mobile TAN
+        """
+
+        print(" Please follow the usual mobile TAN challenge process.")
         tan = input("Enter the TAN code: ")
         return tan
 

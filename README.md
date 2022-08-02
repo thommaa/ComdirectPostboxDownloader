@@ -4,12 +4,17 @@ Lädt alle PDF-Dokumente aus einer beliebigen Zeitspanne herunter.
 
 Benötigt wird Python 3.x
 
-Das Tool muss mittels Kommandozeile gestartet und bedient werden. Es ist zwingend erforderlich, die `settings.ini` anzulegen.
-Aktuell wir nur das Photo-PushTAN-Verfahren unterstützt. Das klassische PhotoTAN-Verfahren ist implementiert, aber noch nicht getestet.
+Das Tool muss mittels Kommandozeile gestartet und bedient werden. 
+Es ist zwingend erforderlich, die `settings.ini` anzulegen.
+Es werden sowohl das Photo-PushTAN- als auch Mobile-TAN-Verfahren unterstützt. 
+Das klassische PhotoTAN-Verfahren ist implementiert, aber noch nicht getestet.
 
 # Setup
-Im Verzeichnis einmalig ausführen.
+Im Verzeichnis einmalig ausführen:
 > pip install -r requirements.txt
+ 
+oder
+> python -m pip install -r requirements.txt
 
 Die `settings.ini` konfigurieren und bereitstellen (siehe Kapitel unten).
 
@@ -30,7 +35,7 @@ Die folgenden Einstellungen erlauben es, das Verhalten des Downloads zu konfigur
 - **useSubFolders** = Legt die Dateien je nach Dateiname in Unterordner ab (alle Finanzreporte unter Finanzreporte, etc.)
 - **downloadOnlyFilenames** = Lädt nur Dateien herunter, deren Dateiname mit einem der hier angegeben Wörter beginnt. Bei False wird alles heruntergeladen.
 - **downloadOnlyFilenamesArray** = Liste der gewünschten Dateinamen
-- **downloadOnlyFromOnlineArchive** = Lädt nur Dateien aus dem Postbox-Archiv herunter.
+- **downloadSource** = Auswahl der Datenherkunft.
 
 
 Siehe settings.ini.example als Beispieldatei.
